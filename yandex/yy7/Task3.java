@@ -1,5 +1,4 @@
 package yandex.yy7;
-
 import java.io.*;
 import java.util.*;
 
@@ -13,50 +12,23 @@ public class Task3 {
                 a[i] = Long.parseLong(st.nextToken());
             }
 
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < 31; i++) {
-                if (a[i] > 0) {
-                    list.add(i);
-                }
+            for (int i = 1; i < 31; i++) {
+                a[i] = Math.max(a[i], 2 * a[i-1]);
             }
 
-            list.sort((x, y) -> {
-                double ratioY = (double) a[y] / pow2(y);
-                double ratioX = (double) a[x] / pow2(x);
-                return Double.compare(ratioY, ratioX);
-            });
+            long answer = Long.MAX_VALUE;
+            long cost = 0;
+            long remaining = M;
 
-            long totalSeconds = 0L;
-            long totalCost = 0L;
+            for (int i = 30; i >= 0; i--) {
+                long cnt = remaining / a[i];
+                cost += cnt * (1L << i);
+                remaining -= cnt * a[i];
 
-            for (int i : list) {
-                if (totalSeconds >= M) break;
-                long maxK = (M - totalSeconds) / a[i];
-                if (maxK <= 0) continue;
-
-                totalSeconds += maxK * a[i];
-                totalCost += maxK * pow2(i);
+                answer = Math.min(answer, cost + (remaining > 0 ? (1L << i) : 0));
             }
 
-            while (totalSeconds < M) {
-                boolean added = false;
-                for (int i : list) {
-                    totalSeconds += a[i];
-                    totalCost += pow2(i);
-                    added = true;
-                    break;
-                }
-                if (!added) {
-                    System.out.println("Impossible");
-                    return;
-                }
-            }
-
-            System.out.println(totalCost);
+            System.out.println(answer);
         }
-    }
-
-    private static long pow2(int i) {
-        return (long) Math.pow(2, i);
     }
 }
