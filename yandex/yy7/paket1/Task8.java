@@ -1,4 +1,4 @@
-package yandex.yy7;
+package yandex.yy7.paket1;
 
 import java.io.*;
 import java.util.*;
@@ -26,7 +26,7 @@ public class Task8 {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int n = Integer.parseInt(reader.readLine().trim());
 
-            long evenSum = 0;
+            long evenOrdersTotal = 0;
             List<OddOrder> oddOrders = new ArrayList<>();
 
             for (int i = 0; i < n; i++) {
@@ -43,29 +43,28 @@ public class Task8 {
                     }
                 }
                 if (L % 2 == 0) {
-                    evenSum += Math.max(oddCount, evenCount);
+                    evenOrdersTotal += Math.max(oddCount, evenCount);
                 } else {
                     oddOrders.add(new OddOrder(oddCount, evenCount));
                 }
             }
 
-            long oddSum = 0;
+            long oddBaseline = 0;
             for (OddOrder order : oddOrders) {
-                oddSum += order.evenCount;
+                oddBaseline += order.evenCount;
             }
-
             int k = oddOrders.size();
-            int p = (k + 1) / 2;
+            int oddStateSlots = (k + 1) / 2;
 
             Collections.sort(oddOrders);
 
-            long extra = 0;
-            for (int i = 0; i < p && i < oddOrders.size(); i++) {
-                extra += oddOrders.get(i).difference;
+            long oddExtra = 0;
+            for (int i = 0; i < oddStateSlots && i < oddOrders.size(); i++) {
+                oddExtra += oddOrders.get(i).difference;
             }
-            oddSum += extra;
+            long oddOrdersTotal = oddBaseline + oddExtra;
 
-            System.out.println(evenSum + oddSum);
+            System.out.println(evenOrdersTotal + oddOrdersTotal);
         }
     }
 }

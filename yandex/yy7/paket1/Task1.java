@@ -1,4 +1,4 @@
-package yandex.yy7;
+package yandex.yy7.paket1;
 
 import java.io.*;
 import java.util.*;
