@@ -97,3 +97,5 @@ public class Task1 {
         }
     }
 }
+
+//https://contest.yandex.ru/contest/74966/problems/

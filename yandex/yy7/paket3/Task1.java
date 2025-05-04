@@ -14,3 +14,5 @@ public class Task1 {
         }
     }
 }
+
+//https://contest.yandex.ru/contest/74967/problems/
